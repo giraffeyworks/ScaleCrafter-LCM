@@ -408,10 +408,10 @@ def main():
     # Final inference
     # Load previous pipeline
     tokenizer = CLIPTokenizer.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="tokenizer", revision=args.revision, torch_dtype=weight_dtype
+        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="tokenizer", revision=args.revision, torch_dtype=weight_dtype
     )
     tokenizer_2 = CLIPTokenizer.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="tokenizer_2", revision=args.revision, torch_dtype=weight_dtype
+        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="tokenizer_2", revision=args.revision, torch_dtype=weight_dtype
     )
     text_encoder = CLIPTextModel.from_pretrained(
         args.pretrained_model_name_or_path, subfolder="text_encoder", revision=args.revision, torch_dtype=weight_dtype

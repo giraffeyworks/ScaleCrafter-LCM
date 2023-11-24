@@ -408,8 +408,13 @@ def main():
     # Final inference
     # Load previous pipeline
     
-    from diffusers import DiffusionPipeline
-    pipeline = DiffusionPipeline.from_pretrained("latent-consistency/lcm-sdxl")
+    from diffusers import UNet2DConditionModel, DiffusionPipeline, LCMScheduler
+    import torch
+    
+    unet = UNet2DConditionModel.from_pretrained("latent-consistency/lcm-sdxl", torch_dtype=torch.float16, variant="fp16")
+    pipe = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", unet=unet, torch_dtype=torch.float16, variant="fp16")
+    
+    pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
     pipeline = pipeline.to(accelerator.device)
     if not args.disable_freeu:
         register_free_upblock2d(pipeline, b1=1.1, b2=1.2, s1=0.6, s2=0.4)

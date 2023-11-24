@@ -39,7 +39,7 @@ class Predictor(BasePredictor):
         """Load the model into memory to make running multiple predictions efficient"""
         # Default config setting.
         args = argparse.Namespace(
-            pretrained_model_name_or_path="stabilityai/stable-diffusion-xl-base-1.0",
+            pretrained_model_name_or_path="latent-consistency/lcm-sdxl",
             revision=None,
             mixed_precision="fp16",
             disable_freeu=False,

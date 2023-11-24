@@ -407,25 +407,7 @@ def main():
 
     # Final inference
     # Load previous pipeline
-    tokenizer = CLIPTokenizer.from_pretrained(
-        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="tokenizer", revision=args.revision, torch_dtype=weight_dtype
-    )
-    tokenizer_2 = CLIPTokenizer.from_pretrained(
-        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="tokenizer_2", revision=args.revision, torch_dtype=weight_dtype
-    )
-    text_encoder = CLIPTextModel.from_pretrained(
-        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="text_encoder", revision=args.revision, torch_dtype=weight_dtype
-    )
-    text_encoder_2 = CLIPTextModelWithProjection.from_pretrained(
-       "stabilityai/stable-diffusion-xl-base-1.0", subfolder="text_encoder_2", revision=args.revision, torch_dtype=weight_dtype
-    )
-    vae = AutoencoderKL.from_pretrained(
-        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="vae", revision=args.revision, torch_dtype=weight_dtype
-    )
-    unet = UNet2DConditionModel.from_pretrained(
-        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="unet", revision=args.revision, torch_dtype=weight_dtype
-    )
-    noise_scheduler = DDIMScheduler.from_pretrained(args.pretrained_model_name_or_path, subfolder="scheduler")
+    
     from diffusers import DiffusionPipeline
     pipeline = DiffusionPipeline.from_pretrained("latent-consistency/lcm-sdxl")
     pipeline = pipeline.to(accelerator.device)

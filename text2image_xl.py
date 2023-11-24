@@ -414,27 +414,20 @@ def main():
         "stabilityai/stable-diffusion-xl-base-1.0", subfolder="tokenizer_2", revision=args.revision, torch_dtype=weight_dtype
     )
     text_encoder = CLIPTextModel.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="text_encoder", revision=args.revision, torch_dtype=weight_dtype
+        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="text_encoder", revision=args.revision, torch_dtype=weight_dtype
     )
     text_encoder_2 = CLIPTextModelWithProjection.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="text_encoder_2", revision=args.revision, torch_dtype=weight_dtype
+       "stabilityai/stable-diffusion-xl-base-1.0", subfolder="text_encoder_2", revision=args.revision, torch_dtype=weight_dtype
     )
     vae = AutoencoderKL.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="vae", revision=args.revision, torch_dtype=weight_dtype
+        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="vae", revision=args.revision, torch_dtype=weight_dtype
     )
     unet = UNet2DConditionModel.from_pretrained(
-        args.pretrained_model_name_or_path, subfolder="unet", revision=args.revision, torch_dtype=weight_dtype
+        "stabilityai/stable-diffusion-xl-base-1.0", subfolder="unet", revision=args.revision, torch_dtype=weight_dtype
     )
     noise_scheduler = DDIMScheduler.from_pretrained(args.pretrained_model_name_or_path, subfolder="scheduler")
-    pipeline = StableDiffusionXLPipeline(
-        vae=vae,
-        text_encoder=text_encoder,
-        text_encoder_2=text_encoder_2,
-        tokenizer=tokenizer,
-        tokenizer_2=tokenizer_2,
-        unet=unet,
-        scheduler=noise_scheduler,
-    )
+    from diffusers import DiffusionPipeline
+    pipeline = DiffusionPipeline.from_pretrained("latent-consistency/lcm-sdxl")
     pipeline = pipeline.to(accelerator.device)
     if not args.disable_freeu:
         register_free_upblock2d(pipeline, b1=1.1, b2=1.2, s1=0.6, s2=0.4)

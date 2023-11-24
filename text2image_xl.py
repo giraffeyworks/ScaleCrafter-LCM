@@ -408,9 +408,7 @@ def main():
     # Final inference
     # Load previous pipeline
     
-    from diffusers import UNet2DConditionModel, DiffusionPipeline, LCMScheduler
-    import torch
-    
+    from diffusers import UNet2DConditionModel, DiffusionPipeline, LCMScheduler    
     unet = UNet2DConditionModel.from_pretrained("latent-consistency/lcm-sdxl", torch_dtype=torch.float16, variant="fp16")
     pipe = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", unet=unet, torch_dtype=torch.float16, variant="fp16")
     
